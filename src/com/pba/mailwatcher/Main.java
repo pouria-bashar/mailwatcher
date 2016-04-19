@@ -13,7 +13,7 @@ public class Main {
 
 		MailWatcher mailWatcher = (MailWatcher) context.getBean("mailWatcher");
 
-		mailWatcher.test();
+		mailWatcher.run();
 
 		((ClassPathXmlApplicationContext) context).close();
 	}

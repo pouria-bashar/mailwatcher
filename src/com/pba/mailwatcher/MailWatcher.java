@@ -7,17 +7,27 @@ import org.springframework.stereotype.Component;
 
 import com.pba.mailwatcher.dao.MailDao;
 import com.pba.mailwatcher.entities.Message;
+import com.pba.mailwatcher.mail.MailService;
+
 @Component
-public class MailWatcher {
+public class MailWatcher implements Runnable {
 
 	@Autowired
 	private MailDao mailDao;
-	
-	
-	public void test(){
+
+	@Autowired
+	private MailService mailService;
+
+	@Override
+	public void run() {
+
 		List<Message> messages = mailDao.getMessages();
-		for(Message m : messages){
-			System.out.println(m);
+		/* If there are not messages Poll */
+		if(messages.size() < 1){
+			
+		}
+		for (Message message : messages) {
+			mailService.sendMail(message);
 		}
 	}
 }

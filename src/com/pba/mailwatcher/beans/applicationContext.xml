@@ -13,8 +13,8 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="25" />
-		<property name="username" value="myusername@gmail.com" />
-		<property name="password" value="mypassword" />
+		<property name="username" value="{}" />
+		<property name="password" value="{}" />
 		<property name="javaMailProperties">
 			<props>
 				<!-- Use SMTP transport protocol -->
@@ -35,7 +35,7 @@
 
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/mailwatcher" />
-		<property name="username" value="john" />
+		<property name="username" value="" />
 		<property name="password" value="" />
 	</bean>
 </beans>

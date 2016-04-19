@@ -2,7 +2,6 @@ package com.pba.mailwatcher;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import com.pba.mailwatcher.dao.MailDao;
 
 public class Main {
 

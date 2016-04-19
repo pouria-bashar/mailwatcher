@@ -10,6 +10,25 @@
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="com.pba.mailwatcher">
 	</context:component-scan>
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="25" />
+		<property name="username" value="myusername@gmail.com" />
+		<property name="password" value="mypassword" />
+		<property name="javaMailProperties">
+			<props>
+				<!-- Use SMTP transport protocol -->
+				<prop key="mail.transport.protocol">smtp</prop>
+				<!-- Use SMTP-AUTH to authenticate to SMTP server -->
+				<prop key="mail.smtp.auth">true</prop>
+				<!-- Use TLS to encrypt communication with SMTP server -->
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+
+
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -17,6 +36,6 @@
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/mailwatcher" />
 		<property name="username" value="john" />
-		<property name="password" value="letmein" />
+		<property name="password" value="" />
 	</bean>
 </beans>

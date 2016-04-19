@@ -22,12 +22,14 @@ public class MailWatcher implements Runnable {
 	public void run() {
 
 		List<Message> messages = mailDao.getMessages();
-		/* If there are not messages Poll */
-		if(messages.size() < 1){
-			
+
+		if (!messages.isEmpty()) {
+			/* If there are not messages Poll */
+			for (Message message : messages) {
+				mailService.sendMail(message);
+			}
 		}
-		for (Message message : messages) {
-			mailService.sendMail(message);
-		}
+		
+
 	}
 }

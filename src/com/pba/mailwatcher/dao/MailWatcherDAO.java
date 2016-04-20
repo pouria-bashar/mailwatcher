@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import com.pba.mailwatcher.entities.Message;
 
 @Component
-public class MailDao {
+public class MailWatcherDAO {
 
 	private NamedParameterJdbcTemplate jdbc;
 

@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.pba.mailwatcher.dao.MailDao;
+import com.pba.mailwatcher.dao.MailWatcherDAO;
 import com.pba.mailwatcher.entities.Message;
 import com.pba.mailwatcher.mail.MailService;
 
@@ -16,7 +16,7 @@ public class MailWatcher implements Runnable {
 	private static final Logger logger = Logger.getLogger(MailWatcher.class.getName());
 	
 	@Autowired
-	private MailDao mailDao;
+	private MailWatcherDAO mailWatcherDAO;
 
 	@Autowired
 	private MailService mailService;
@@ -24,15 +24,16 @@ public class MailWatcher implements Runnable {
 	@Override
 	public void run() {
 
-		List<Message> messages = mailDao.getMessages();
+		List<Message> messages = mailWatcherDAO.getMessages();
 
 		if (!messages.isEmpty()) {
-			/* If there are not messages Poll */
 			for (Message message : messages) {
 				mailService.sendMail(message);
+				/* Mark message as sent */
+				
 			}
 		}
-		/* Sleep */
+		/* If there are not messages Poll */
 		try {
 			Thread.sleep(100L);
 		} catch (InterruptedException e) {

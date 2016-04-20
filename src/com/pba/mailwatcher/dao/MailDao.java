@@ -13,21 +13,28 @@ import org.springframework.stereotype.Component;
 
 import com.pba.mailwatcher.entities.Message;
 
-@Component("mailDao")
+@Component
 public class MailDao {
 
-private NamedParameterJdbcTemplate jdbc;
-	
+	private NamedParameterJdbcTemplate jdbc;
+
+	/**
+	 * Sets the jdbc data source
+	 * 
+	 * @param jdbc
+	 */
 	@Autowired
 	public void setDataSource(DataSource jdbc) {
-		
 		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
 	}
-	
+
+	/**
+	 * Returns a list of messages to send
+	 * 
+	 * @return list of Message
+	 */
 	public List<Message> getMessages() {
-
 		return jdbc.query("select * from message", new RowMapper<Message>() {
-
 			public Message mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Message message = new Message();
 				message.setId(rs.getInt("id"));
@@ -37,11 +44,7 @@ private NamedParameterJdbcTemplate jdbc;
 				message.setBody(rs.getString("body"));
 				return message;
 			}
-
 		});
 	}
-	
-	
-	
 
 }

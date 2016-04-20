@@ -1,14 +1,12 @@
-package com.pba.mailwatcher.mail;
+package com.pba.mailwatcher.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Component;
 
 import com.pba.mailwatcher.entities.Message;
 
-@Component
-public class MailService {
+public class MailWatcherService {
 
 	@Autowired
 	private MailSender mailSender;

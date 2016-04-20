@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.pba.mailwatcher.dao.MailWatcherDAO;
 import com.pba.mailwatcher.entities.Message;
-import com.pba.mailwatcher.mail.MailService;
+import com.pba.mailwatcher.service.MailWatcherService;
 
 @Component
 public class MailWatcher implements Runnable {
@@ -19,7 +19,7 @@ public class MailWatcher implements Runnable {
 	private MailWatcherDAO mailWatcherDAO;
 
 	@Autowired
-	private MailService mailService;
+	private MailWatcherService mailWatcherService;
 
 	@Override
 	public void run() {
@@ -28,7 +28,7 @@ public class MailWatcher implements Runnable {
 
 		if (!messages.isEmpty()) {
 			for (Message message : messages) {
-				mailService.sendMail(message);
+				mailWatcherService.sendMail(message);
 				/* Mark message as sent */
 				
 			}

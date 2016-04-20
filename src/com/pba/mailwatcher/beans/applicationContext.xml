@@ -6,36 +6,30 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
+	<context:property-placeholder
+		location="com/pba/mailwatcher/properties/mailwatcher.properties" />
 
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="com.pba.mailwatcher">
 	</context:component-scan>
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com" />
-		<property name="port" value="25" />
-		<property name="username" value="{}" />
-		<property name="password" value="{}" />
+		<property name="host" value="${smtp.host}" />
+		<property name="port" value="${smtp.port}" />
+		<property name="username" value="${smtp.username}" />
+		<property name="password" value="${smtp.password}" />
 		<property name="javaMailProperties">
 			<props>
-				<!-- Use SMTP transport protocol -->
 				<prop key="mail.transport.protocol">smtp</prop>
-				<!-- Use SMTP-AUTH to authenticate to SMTP server -->
 				<prop key="mail.smtp.auth">true</prop>
-				<!-- Use TLS to encrypt communication with SMTP server -->
 				<prop key="mail.smtp.starttls.enable">true</prop>
-				<prop key="mail.debug">true</prop>
 			</props>
 		</property>
 	</bean>
-
-
-
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/mailwatcher" />
-		<property name="username" value="" />
-		<property name="password" value="" />
+		<property name="driverClassName" value="${jdbc.driver.class}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
 </beans>

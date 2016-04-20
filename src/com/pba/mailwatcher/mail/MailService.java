@@ -3,9 +3,10 @@ package com.pba.mailwatcher.mail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Component;
 
 import com.pba.mailwatcher.entities.Message;
-
+@Component
 public class MailService {
 
 	@Autowired
@@ -19,6 +20,7 @@ public class MailService {
 		simpleMailMessage.setTo(message.getRecipient());
 		simpleMailMessage.setSubject(message.getSubject());
 		simpleMailMessage.setText(message.getBody());
+		
 		mailSender.send(simpleMailMessage);
 	}
 }

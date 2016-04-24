@@ -51,7 +51,6 @@ public class MailWatcher implements Runnable {
 			}
 			/* If there are not messages Poll */
 			try {
-				 
 				logger.log(Level.INFO, "Sleeping for {0}", config.getMaxPollTime());
 				TimeUnit.SECONDS.sleep(config.getMaxPollTime());
 			} catch (InterruptedException e) {

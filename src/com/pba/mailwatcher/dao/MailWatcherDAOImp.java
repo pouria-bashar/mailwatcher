@@ -1,14 +1,11 @@
 package com.pba.mailwatcher.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Component;
 
 import com.pba.mailwatcher.entities.Message;
@@ -16,16 +13,15 @@ import com.pba.mailwatcher.entities.MessageMapper;
 
 @Component
 public class MailWatcherDAOImp implements MailWatcherDAO {
-	private JdbcTemplate JdbcTemplate;
-	private SimpleJdbcCall simpleJdbcCall;
+	private JdbcTemplate jdbcTemplate;
 	/**
 	 * Sets the jdbc data source
 	 * @param dataSource the  data source
 	 */
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
-		this.JdbcTemplate = new JdbcTemplate(dataSource);
-		simpleJdbcCall = new SimpleJdbcCall(dataSource);
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		
 
 	}
 
@@ -49,7 +45,10 @@ public class MailWatcherDAOImp implements MailWatcherDAO {
 		getJdbcTemplate().update("call MarkMessageAsSent(?)",new Object[] { messageID });
 	}
 	
+	/**
+	 * @return the jdbcTemplate
+	 */
 	public JdbcTemplate getJdbcTemplate() {
-		return JdbcTemplate;
+		return jdbcTemplate;
 	}
 }

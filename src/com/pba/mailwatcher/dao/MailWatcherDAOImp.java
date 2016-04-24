@@ -1,20 +1,25 @@
 package com.pba.mailwatcher.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Component;
 
 import com.pba.mailwatcher.entities.Message;
+import com.pba.mailwatcher.entities.MessageMapper;
+
 @Component
 public class MailWatcherDAOImp implements MailWatcherDAO {
-
+	private SimpleJdbcCall jdbcCall;
 	private NamedParameterJdbcTemplate jdbc;
 
 	/**
@@ -25,6 +30,7 @@ public class MailWatcherDAOImp implements MailWatcherDAO {
 	@Autowired
 	public void setDataSource(DataSource jdbc) {
 		this.jdbc = new NamedParameterJdbcTemplate(jdbc);
+		this.jdbcCall = new SimpleJdbcCall(jdbc);
 	}
 
 	/**
@@ -32,27 +38,29 @@ public class MailWatcherDAOImp implements MailWatcherDAO {
 	 * 
 	 * @return list of Message
 	 */
-	public List<Message> getMessages() {
-		return jdbc.query("select * from message", new RowMapper<Message>() {
-			public Message mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Message message = new Message();
-				message.setId(rs.getInt("id"));
-				message.setSubject(rs.getString("subject"));
-				message.setRecipient(rs.getString("recipient"));
-				message.setFrom(rs.getString("from"));
-				message.setBody(rs.getString("body"));
-				return message;
-			}
-		});
+	public List<Message> getMessages(Integer maxNumberOfMessages) {
+		jdbcCall.setProcedureName("GetMessagesToSend");
+		SqlParameterSource in = new MapSqlParameterSource().addValue("MEX_NUMBER_OF_MESSAGES", maxNumberOfMessages);
+		List<Message> messages = new ArrayList<>();
+		Map<String, Object> result = jdbcCall.execute(in);
+		for (Map.Entry<String, Object> entry : result.entrySet()) {
+			
+			messages.add((Message) entry.getValue());
+
+		}
+		return messages; // jdbc.query("call GetMessagesToSend(?)", params, new
+						// MessageMapper());
 	}
-	
+
 	/**
 	 * Marks a mesasge as sent
-	 * @param messageID the message ID
+	 * 
+	 * @param messageID
+	 *            the message ID
 	 */
-	public void markMessageAsSent(Integer messageID){
-		/**
-		 * TODO
-		 */
+	public void markMessageAsSent(Integer messageID) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("MessageID", messageID);
+		jdbc.update("call MarkMessageAsSent(?)", params);
 	}
 }

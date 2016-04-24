@@ -12,6 +12,10 @@ public class MailService {
 	@Autowired
 	private MailSender mailSender;
 
+	/**
+	 * Sends a mail via SMPTP
+	 * @param message the message to send
+	 */
 	public void sendMail(Message message) {
 
 		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -23,4 +27,7 @@ public class MailService {
 		
 		mailSender.send(simpleMailMessage);
 	}
+	
+	
+	
 }

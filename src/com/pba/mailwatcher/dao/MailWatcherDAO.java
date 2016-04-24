@@ -10,9 +10,10 @@ import com.pba.mailwatcher.entities.Message;
  */
 public interface MailWatcherDAO {
 
-	public List<Message> getMessages();
+	public List<Message> getMessages(Integer maxNumberOfMessages);
 	
 	public void markMessageAsSent(Integer messageID);
 	
-
+	
+	
 }

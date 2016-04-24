@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class MailwatcherConfig {
 
 	@Value("${mailwatcher.poll.time}")
-	private Long maxPollTime;
+	private Integer maxPollTime;
 	
 	@Value("${mailwatcher.max.messages}")
 	private Integer maxNumberOfMessages;
@@ -22,7 +22,7 @@ public class MailwatcherConfig {
 	/**
 	 * @return the max amount to poll if there are no messages to process
 	 */
-	public Long getMaxPollTime() {
+	public Integer getMaxPollTime() {
 		return maxPollTime;
 	}
 }

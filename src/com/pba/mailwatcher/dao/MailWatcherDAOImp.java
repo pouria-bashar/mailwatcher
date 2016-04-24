@@ -21,8 +21,6 @@ public class MailWatcherDAOImp implements MailWatcherDAO {
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
-		
-
 	}
 
 	/**
@@ -31,9 +29,7 @@ public class MailWatcherDAOImp implements MailWatcherDAO {
 	 * @return list of Message
 	 */
 	public List<Message> getMessages(Integer maxNumberOfMessages) {
-		
-		List<Message> messages = getJdbcTemplate().query( "call GetMessagesToSend(?)", new Object[] { maxNumberOfMessages }, new MessageMapper());		
-		return messages;
+		return getJdbcTemplate().query( "call GetMessagesToSend(?)", new Object[] { maxNumberOfMessages }, new MessageMapper());		
 	}
 
 	/**
@@ -41,7 +37,6 @@ public class MailWatcherDAOImp implements MailWatcherDAO {
 	 * @param messageID the message ID
 	 */
 	public void markMessageAsSent(Integer messageID) {
-		
 		getJdbcTemplate().update("call MarkMessageAsSent(?)",new Object[] { messageID });
 	}
 	

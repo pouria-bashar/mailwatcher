@@ -1,8 +1,12 @@
 package com.pba.mailwatcher.entities;
 
-
+/**
+ * Encapsulate a Message 
+ * @author Pouria
+ */
 public class Message {
 
+	
 	private Integer id;
 	private String subject;
 	private String from;
